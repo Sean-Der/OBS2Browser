@@ -3,7 +3,9 @@ package main
 import (
 	"fmt"
 	"io"
+	"log"
 	"net/http"
+	"os"
 	"sync/atomic"
 
 	"golang.org/x/net/websocket"
@@ -72,6 +74,7 @@ var (
 )
 
 func whipHandler(w http.ResponseWriter, req *http.Request) {
+	log.Println("Accepted WHIP Request")
 	offer, err := io.ReadAll(req.Body)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
@@ -96,6 +99,7 @@ func whipHandler(w http.ResponseWriter, req *http.Request) {
 }
 
 func websocketHandler(ws *websocket.Conn) {
+	log.Println("WebSocket connected")
 	currentWebsocket.Store(ws)
 
 	for {
@@ -107,6 +111,7 @@ func websocketHandler(ws *websocket.Conn) {
 		answerChan <- answer
 	}
 
+	log.Println("WebSocket disconnected")
 	currentWebsocket.Store(nilWs)
 }
 
@@ -120,5 +125,11 @@ func main() {
 		websocketHandler(ws)
 	}))
 
-	panic(http.ListenAndServe(":80", nil))
+	httpAddr := os.Getenv("HTTP_ADDR")
+	if len(httpAddr) == 0 {
+		httpAddr = ":80"
+	}
+
+	log.Printf("Starting HTTP Server on %s", httpAddr)
+	panic(http.ListenAndServe(httpAddr, nil))
 }
