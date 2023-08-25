@@ -19,7 +19,7 @@ To confirm this you can shut down `OBS2Browser` after the session has started. Y
 
 ### Run `OBS2Browser`
 
-Execute `go run github.com/sean-der/OBS2Browser@latest` by default it listens on port 80. You can change that by setting the enviroment variable `HTTP_ADDR`.
+Execute `go run github.com/sean-der/OBS2Browser@latest` by default it listens on port 80. You can change that by setting the environment variable `HTTP_ADDR`.
 
 You should see a log line for the HTTP Server starting
 
