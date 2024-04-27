@@ -6,6 +6,9 @@ On a properly configured local machine you can expect to see sub-100ms times.
 
 To do this we use the newly added WHIP output in OBS. With WebRTC you can now have a low latency P2P broadcast in OBS.
 
+If you want to do a 'one to many' broadcast [Broadcast Box](https://github.com/glimesh/broadcast-box) might be a better option.
+OBS2Browser can only support one viewer at a time, while Broadcast Box has no upper limit.
+
 ## How it works
 
 `OBS2Browser` facilitates the handshake between your browser and OBS. It exists just to transport two text messages.
